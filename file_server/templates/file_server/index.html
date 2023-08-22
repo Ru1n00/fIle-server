@@ -1,0 +1,18 @@
+{% if request.user.is_authenticated %}
+    <a href="{% url 'file_server:logout' %}">Logout</a>
+
+    <div class="containter">
+        {% for file in files %}
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="{{ file.file.url }}">{{ file.file.name }}</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'file_server:delete_file' file.id %}">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <a href="{% url 'file_server:login' %}">Login</a>
+{% endif %}
