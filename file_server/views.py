@@ -1,9 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
+from .models import File
+
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        files = File.objects.filter(user=request.user)
+        return render(request, 'file_server/index.html', {'files': files})
     return render(request, 'file_server/index.html')
 
 def sign_in(request):
@@ -17,7 +22,7 @@ def sign_in(request):
         if user is not None:
             # login user
             login(request, user)
-            return render(request, 'file_server/index.html')
+            return redirect('file_server:index')
         else:
             return render(request, 'file_server/sign_in.html', {'error': 'Invalid username or password'})
         
@@ -28,4 +33,5 @@ def sign_in(request):
 
 def sign_out(request):
     logout(request)
-    return render(request, 'file_server/index.html')
+    return redirect('file_server:index')
+    # return render(request, 'file_server/index.html')
