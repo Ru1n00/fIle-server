@@ -12,9 +12,6 @@ def index(request):
     if request.user.is_authenticated:
         files = File.objects.filter(user=request.user)
         return render(request, 'file_server/index.html', {'files': files})
-    
-    message = 'You are not logged in'
-    messages.info(request, message)
     return render(request, 'file_server/index.html')
 
 
