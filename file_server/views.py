@@ -45,27 +45,24 @@ def protected_serve(request, document_root=None):
 def sign_in(request):
     form = AuthenticationForm()
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
 
-        # authenticate user
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            # login user
-            login(request, user)
-            if request.GET.get('next'):
-                return redirect(request.GET.get('next'))
-            return redirect('file_server:index')
+            if user is not None:
+                login(request, user)
+                if request.GET.get('next'):
+                    return redirect(request.GET.get('next'))
+                return redirect('file_server:index')
         else:
             message = 'Invalid username or password'
             messages.info(request, message)
-            return render(request, 'file_server/sign_in.html', {'form': form})
+            return render(request, 'file_server/sign_in.html')
         
     elif request.method == 'GET':
         if request.user.is_authenticated:
             return redirect('file_server:index')
-        return render(request, 'file_server/sign_in.html', {'form': form})
+        return render(request, 'file_server/sign_in.html')
     # return render(request, 'file_server/sign_in.html')
 
 
