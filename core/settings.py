@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     # my apps
     'file_server.apps.FileServerConfig',
+
+    # third party apps
+    'django_cleanup.apps.CleanupConfig'
 ]
 
 MIDDLEWARE = [
