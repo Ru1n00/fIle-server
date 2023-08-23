@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File server</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary px-5">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'file_server:index' %}">File Server</a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          {% if not request.user.is_authenticated %}
+            <a class="nav-link active" areia-current="page" href="{% url 'file_server:signup' %}">Signup</a>
+            <a class="nav-link active" areia-current="page" href="{% url 'file_server:login' %}">Login</a>
+          {% else %}
+            <span class="nav-link active" areia-current="page">{{ request.user|upper }}</span>
+            <a class="nav-link active" areia-current="page" href="{% url 'file_server:logout' %}">Logout</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
