@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.views.static import serve
 from django.contrib import messages
 
@@ -64,6 +64,32 @@ def sign_in(request):
             return redirect('file_server:index')
         return render(request, 'file_server/sign_in.html')
     # return render(request, 'file_server/sign_in.html')
+
+
+def sign_up(request):
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            # save user
+            user = form.save()
+            # login user
+            login(request, user)
+            return redirect('file_server:index')
+        else:
+            msgs = form.errors
+            for msg in msgs:
+                message = msgs[msg][0]
+                print(message, type(message))
+            # messages.info(request, message)
+            return render(request, 'file_server/sign_up.html', {'form': form})
+        
+    elif request.method == 'GET':
+        if request.user.is_authenticated:
+            return redirect('file_server:index')
+        return render(request, 'file_server/sign_up.html', {'form': form})
 
 
 def sign_out(request):

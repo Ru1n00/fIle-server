@@ -9,5 +9,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('sign_in', views.sign_in, name='login'),
     path('sign_out', views.sign_out, name='logout'),
+    path('sign_up', views.sign_up, name='signup'),
     re_path(r'media/*', views.protected_serve, {'document_root': settings.MEDIA_ROOT})
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
