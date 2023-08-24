@@ -8,6 +8,7 @@
     {% endfor %}
     
     <div class="my-4">
+        <h2 class="text-center">Login</h2>
         <form action="{% url 'file_server:login' %}?next={{request.GET.next}}" method="post">
             {% csrf_token %}
             <div class="mb-3">
