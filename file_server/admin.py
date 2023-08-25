@@ -4,6 +4,6 @@ from .models import File
 # Register your models here.
 
 class FileAdmin(admin.ModelAdmin):
-    list_display = ('name', 'file', 'user', 'uploaded_at')
+    list_display = ('id', 'name', 'file', 'user', 'uploaded_at')
 
 admin.site.register(File, FileAdmin)
