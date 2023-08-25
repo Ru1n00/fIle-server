@@ -1,0 +1,31 @@
+{% extends 'file_server/base.html' %}
+{% load static %}
+{% block content %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+
+        <h2 class="text-center">Upload a file</h2>
+
+    <form action="" method="post" enctype="multipart/form-data" id="upload-form">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Select a file</label>
+            <input class="form-control" name="file" type="file" id="formFile" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+
+    <div class="not-visible mt-5" id="progress">
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'js/handleUpload.js' %}"></script>
+{% endblock scripts %}
