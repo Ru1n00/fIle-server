@@ -24,7 +24,7 @@
                 </div>
             </div>
         {% endfor %}
-        <a class="p-2 mt-4 border btn btn-primary" href="">Upload new file</a>
+        <a class="p-2 mt-4 border btn btn-primary" href="{% url 'file_server:upload_file' %}">Upload new file</a>
     </div>
 
 {% else %}
