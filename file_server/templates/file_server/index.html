@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md-12 d-flex justify-content-between border rounded py-2 px-4 g-2">
                     <a class="btn text-primary" href="{{ file.file.url }}">{{ file.name }}</a>
-                    <a class="btn text-danger" href="">Delete</a>
+                    <a class="btn text-danger" href="{% url 'file_server:delete_file' file.id %}">Delete</a>
                 </div>
             </div>
         {% endfor %}
@@ -39,3 +39,7 @@
     </div>
 {% endif %}
 {% endblock content %}
+
+{% block scripts %}
+    
+{% endblock scripts %}

@@ -63,6 +63,23 @@ def upload_file(request):
     return render(request, 'file_server/upload_file.html', {'form': FileForm()})
 
 
+@login_required(login_url='file_server:login')
+def delete_file(request, file_id):
+    try:
+        file = File.objects.get(id=file_id)
+    except:
+        message = 'File does not exist'
+        messages.info(request, message)
+        return redirect('file_server:index')
+    if file.user == request.user:
+        file.delete()
+        return redirect('file_server:index')
+    else:
+        message = 'You are not authorized to delete this file'
+        messages.info(request, message)
+        return redirect('file_server:index')
+
+
 def sign_in(request):
     form = AuthenticationForm()
     if request.method == 'POST':
