@@ -7,8 +7,9 @@ app_name = 'file_server'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('sign_in', views.sign_in, name='login'),
-    path('sign_out', views.sign_out, name='logout'),
-    path('sign_up', views.sign_up, name='signup'),
+    path('upload-file', views.upload_file, name='upload_file'),
+    path('sign-in', views.sign_in, name='login'),
+    path('sign-out', views.sign_out, name='logout'),
+    path('sign-up', views.sign_up, name='signup'),
     re_path(r'media/*', views.protected_serve, {'document_root': settings.MEDIA_ROOT})
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

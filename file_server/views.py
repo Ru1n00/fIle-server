@@ -6,6 +6,7 @@ from django.views.static import serve
 from django.contrib import messages
 
 from .models import File
+from .forms import FileForm
 
 # Create your views here.
 def index(request):
@@ -40,6 +41,26 @@ def protected_serve(request, document_root=None):
         message = 'You are not logged in'
         messages.info(request, message)
         return redirect('file_server:login')
+    
+
+@login_required(login_url='file_server:login')
+def upload_file(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        print(form.data)
+        if form.is_valid():
+            file_obj = form.save(commit=False)
+            file_obj.user = request.user
+            file_obj.save()
+            return redirect('file_server:index')
+        else:
+            msgs = form.errors
+            for msg in msgs:
+                message = msgs[msg][0]
+            messages.info(request, message)
+            return render(request, 'file_server/upload_file.html')
+
+    return render(request, 'file_server/upload_file.html', {'form': FileForm()})
 
 
 def sign_in(request):
